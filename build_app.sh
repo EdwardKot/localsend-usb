@@ -23,6 +23,7 @@ xcrun swiftc \
   -module-cache-path "$MODULE_CACHE" \
   -framework SwiftUI \
   -framework AppKit \
+  "$ROOT/Localization.swift" \
   "$ROOT/LocalSendUSBApp.swift" \
   "$ROOT/ContentView.swift" \
   "$ROOT/SetupRunner.swift" \

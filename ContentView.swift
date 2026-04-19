@@ -84,7 +84,7 @@ struct TitleBar: View {
                 Text("LocalSend USB")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white)
-                Text("adb reverse 转发工具")
+                Text(AppText.subtitle)
                     .font(.system(size: 11))
                     .foregroundColor(.white.opacity(0.45))
             }
@@ -195,7 +195,7 @@ struct ReverseInfoBox: View {
                     .font(.system(size: 12))
                     .foregroundColor(Color(hex: "#34C759"))
 
-                Text("当前 reverse 列表")
+                Text(AppText.reverseListTitle)
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(Color(hex: "#34C759"))
             }
@@ -228,11 +228,11 @@ struct NextStepsBox: View {
                 .padding(.top, 1)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("下一步请手动操作：")
+                Text(AppText.nextStepsTitle)
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.white)
 
-                Text("1. 打开 Android 端 LocalSend\n2. 保持 USB 连接\n3. 开始传图")
+                Text(AppText.nextStepsBody)
                     .font(.system(size: 12))
                     .foregroundColor(.white.opacity(0.72))
                     .fixedSize(horizontal: false, vertical: true)
@@ -293,19 +293,19 @@ struct BottomBar: View {
             Group {
                 switch runner.phase {
                 case .ready:
-                    Label("准备就绪", systemImage: "circle.dotted")
+                    Label(AppText.statusReady, systemImage: "circle.dotted")
                         .foregroundColor(.white.opacity(0.35))
                 case .confirming:
-                    Label("等待确认", systemImage: "ellipsis.circle")
+                    Label(AppText.statusWaitingConfirm, systemImage: "ellipsis.circle")
                         .foregroundColor(Color(hex: "#5AC8FA"))
                 case .running:
-                    Label("运行中…", systemImage: "arrow.clockwise")
+                    Label(AppText.statusRunning, systemImage: "arrow.clockwise")
                         .foregroundColor(Color(hex: "#5AC8FA"))
                 case .done:
-                    Label("完成，可以继续传图或关闭本工具", systemImage: "checkmark.circle.fill")
+                    Label(AppText.statusDone, systemImage: "checkmark.circle.fill")
                         .foregroundColor(Color(hex: "#34C759"))
                 case .failed:
-                    Label("失败", systemImage: "xmark.circle.fill")
+                    Label(AppText.statusFailed, systemImage: "xmark.circle.fill")
                         .foregroundColor(Color(hex: "#FF3B30"))
                 }
             }
@@ -315,21 +315,21 @@ struct BottomBar: View {
 
             // Buttons
             if runner.phase == .failed || runner.phase == .done {
-                Button("重新运行") {
+                Button(AppText.rerun) {
                     runner.reset()
                 }
                 .buttonStyle(SecondaryButtonStyle())
             }
 
             if runner.phase == .done {
-                Button("退出") {
+                Button(AppText.quit) {
                     NSApp.terminate(nil)
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
 
             if runner.phase == .ready || runner.phase == .failed {
-                Button(runner.phase == .failed ? "重试" : "开始") {
+                Button(runner.phase == .failed ? AppText.retry : AppText.start) {
                     if runner.phase == .failed { runner.reset() }
                     runner.start()
                 }
@@ -360,22 +360,22 @@ struct ConfirmSheet: View {
                                        startPoint: .top, endPoint: .bottom)
                     )
 
-                Text("开始前请确认")
+                Text(AppText.confirmTitle)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.white)
 
                 VStack(alignment: .leading, spacing: 10) {
-                    ConfirmItem(icon: "iphone", text: "已手动关闭 Android 端 LocalSend")
-                    ConfirmItem(icon: "lock.open", text: "两端的\"加密\"选项均已关闭")
-                    ConfirmItem(icon: "cable.connector", text: "USB 已连接，USB 调试已开启")
+                    ConfirmItem(icon: "iphone", text: AppText.confirmAndroidClosed)
+                    ConfirmItem(icon: "lock.open", text: AppText.confirmEncryptionOff)
+                    ConfirmItem(icon: "cable.connector", text: AppText.confirmUSBReady)
                 }
                 .padding(.horizontal, 8)
 
                 HStack(spacing: 12) {
-                    Button("取消") { onCancel() }
+                    Button(AppText.cancel) { onCancel() }
                         .buttonStyle(SecondaryButtonStyle())
 
-                    Button("已确认，继续") { onContinue() }
+                    Button(AppText.continueConfirmed) { onContinue() }
                         .buttonStyle(PrimaryButtonStyle())
                 }
             }

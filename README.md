@@ -2,6 +2,8 @@
 
 Small macOS SwiftUI helper app for rebuilding `adb reverse` and launching LocalSend for USB-based transfers.
 
+[中文说明](README.zh-CN.md)
+
 ## Requirements
 
 - macOS 14+
